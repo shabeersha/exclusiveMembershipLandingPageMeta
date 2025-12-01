@@ -63,12 +63,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 btn.disabled = true;
 
                 setTimeout(() => {
-                    alert(`Thank you, ${name}! We have received your request. Our career advisor will contact you shortly on ${fullPhoneNumber}.`);
-                    form.reset();
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                }, 1500);
-            }
+                    setTimeout(() => {
+                        // Redirect to Thank You page
+                        window.location.href = 'thankyou.html';
+                    }, 1500);
+                }
         });
     }
 
@@ -90,5 +89,24 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         };
         updateCount();
+    });
+
+    // FAQ Accordion
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', () => {
+            const item = question.parentElement;
+            const isActive = item.classList.contains('active');
+
+            // Close all other items
+            document.querySelectorAll('.faq-item').forEach(otherItem => {
+                otherItem.classList.remove('active');
+            });
+
+            // Toggle current item
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        });
     });
 });

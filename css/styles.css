@@ -538,49 +538,73 @@ p {
     height: 100%;
 }
 
-/* Highlights Section */
-.highlights-section {
+/* FAQ Section */
+.faq-section {
     padding: 80px 0;
     background-color: #0f1430;
 }
 
-.highlights-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: center;
+.faq-container {
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-.program-visual-img {
-    width: 100%;
-    height: auto;
-    border-radius: 16px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.highlights-list li {
-    display: flex;
-    margin-bottom: 30px;
-}
-
-.highlights-list .icon {
-    font-size: 24px;
-    margin-right: 20px;
-    background: rgba(255, 255, 255, 0.05);
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.faq-item {
+    background-color: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 12px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
 }
 
-.highlights-list strong {
-    display: block;
-    color: white;
-    margin-bottom: 5px;
+.faq-item:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.faq-question {
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    background: transparent;
+}
+
+.faq-question h3 {
     font-size: 1.1rem;
+    margin-bottom: 0;
+    color: white;
+    font-weight: 600;
+}
+
+.faq-toggle {
+    font-size: 24px;
+    color: var(--secondary-teal);
+    transition: transform 0.3s ease;
+    line-height: 1;
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    padding: 0 25px;
+}
+
+.faq-answer p {
+    padding-bottom: 25px;
+    margin-bottom: 0;
+    color: var(--text-secondary);
+}
+
+.faq-item.active .faq-toggle {
+    transform: rotate(45deg);
+}
+
+.faq-item.active .faq-answer {
+    max-height: 200px;
+    /* Approximate max height */
 }
 
 /* Footer */

@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Initialize intl-tel-input
-    const phoneInput = document.querySelector("#phone");
+    const phoneInput = document.querySelector("#international_PhoneNumber");
     let iti;
     if (phoneInput) {
         iti = window.intlTelInput(phoneInput, {
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // Basic validation
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
+            const phone = document.getElementById('international_PhoneNumber').value;
             const status = document.getElementById('current-status').value;
 
             // Phone Validation

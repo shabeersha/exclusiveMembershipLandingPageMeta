@@ -90,22 +90,47 @@
                         <h3>Book Your Learning Consultation</h3>
                         <p>Speak to a Senior Career Advisor (Not a Salesperson)</p>
                     </div>
-                    <form id="leadForm" action="" method="POST">
+                    <form id="leadForm"
+                        action="https://forms.zohopublic.in/brototype/form/ExclusiveMembershipProgram2/formperma/QDmY_8RGc2BeadY9BHqnbgr5-aoxNAy7btzGTZSBLZk/htmlRecords/submit"
+                        method="POST" accept-charset='UTF-8' enctype='multipart/form-data'>
+                        <input type="hidden" name="zf_referrer_name"
+                            value=""><!-- To Track referrals , place the referrer name within the " " in the above hidden input field -->
+                        <input type="hidden" name="zf_redirect_url"
+                            value=""><!-- To redirect to a specific page after record submission , place the respective url within the " " in the above hidden input field -->
+                        <input type="hidden" name="zc_gad"
+                            value=""><!-- If GCLID is enabled in Zoho CRM Integration, click details of AdWords Ads will be pushed to Zoho CRM -->
+                        <input type="hidden" name="utm_source" value="" />
+                        <input type="hidden" name="utm_medium" value="" />
+                        <input type="hidden" name="utm_campaign" value="" />
+                        <input type="hidden" name="utm_term" value="" />
+                        <input type="hidden" name="utm_content" value="" />
+                        <input type="hidden" name="utm_id" value="" />
+                        <input type="hidden" name="utm_adgroup" value="" />
+                        <input type="hidden" name="utm_matchtype" value="" />
+                        <input type="hidden" name="utm_audience" value="" />
+                        <input type="hidden" name="utm_adgroupid" value="" />
+                        <input type="hidden" name="ref" value="" />
+                        <input type="hidden" name="utm_network" value="" />
+                        <input type="hidden" name="utm_placement" value="" />
                         <div class="form-group">
                             <label for="name" class="form-label">Full Name</label>
-                            <input type="text" id="name" name="name" placeholder="e.g. Rahul Kumar" required>
+                            <input type="text" id="name" maxlength="255" name="Name1_First" fieldType="7"
+                                placeholder="e.g. Rahul Kumar" required>
                         </div>
                         <div class="form-group">
                             <label for="email" class="form-label">Email Address</label>
-                            <input type="email" id="email" name="email" placeholder="rahul@example.com" required>
+                            <input type="email" id="email" maxlength="255" name="Email" fieldType="9"
+                                placeholder="rahul@example.com" required>
                         </div>
                         <div class="form-group">
                             <label for="phone" class="form-label">WhatsApp Number</label>
-                            <input type="tel" id="phone" name="phone" placeholder="9037847538" required>
+                            <input type="tel" compname="PhoneNumber" name="PhoneNumber_countrycode" phoneFormat="1"
+                                isCountryCodeEnabled=true maxlength="20" value="" fieldType=11
+                                id="international_PhoneNumber" placeholder="9037847538" required>
                         </div>
                         <div class="form-group">
                             <label for="current-status" class="form-label">Current Status</label>
-                            <select id="current-status" name="current-status" required>
+                            <select id="current-status" name="Employment-Status" required>
                                 <option value="" selected disabled hidden>Select your current status</option>
                                 <option value="student">College Student</option>
                                 <option value="graduate">Recent Graduate</option>

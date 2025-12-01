@@ -63,11 +63,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 btn.disabled = true;
 
                 setTimeout(() => {
-                    setTimeout(() => {
-                        // Redirect to Thank You page
-                        window.location.href = 'thankyou.html';
-                    }, 1500);
-                }
+                    // Redirect to Thank You page
+                    window.location.href = 'thankyou.html';
+                }, 1500);
+            }
         });
     }
 

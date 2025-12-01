@@ -1,0 +1,124 @@
+/* Tablet Styles (max-width: 1024px) */
+@media (max-width: 1024px) {
+    .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .hero-content {
+        text-align: center;
+    }
+
+    .pain-points-box {
+        text-align: left;
+        max-width: 600px;
+        margin: 0 auto 30px;
+    }
+
+    .benefits-list {
+        display: inline-block;
+        text-align: left;
+    }
+
+    .form-card {
+        position: static;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .highlights-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .highlights-image {
+        order: -1;
+    }
+
+    h1 {
+        font-size: 2.8rem;
+    }
+}
+
+/* Mobile Styles (max-width: 768px) */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 16px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    .hero-section {
+        padding: 40px 0;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .mobile-only-cta {
+        display: block;
+        margin-top: 20px;
+    }
+
+    .hero-form-wrapper {
+        margin-top: 40px;
+    }
+
+    /* On mobile, we might want to hide the form initially or place it differently
+       For now, we just stack it as requested */
+
+    .btn-lg {
+        width: 100%;
+    }
+
+    .header-content .btn {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
+    .logo {
+        font-size: 20px;
+    }
+
+    .partners-grid {
+        gap: 15px;
+    }
+
+    .partner-logo {
+        font-size: 18px;
+        padding: 10px 20px;
+    }
+
+    .form-card {
+        padding: 20px;
+    }
+
+    .hero-badge {
+        font-size: 12px;
+        padding: 6px 12px;
+        white-space: normal;
+        text-align: center;
+    }
+}
+
+/* Small Mobile Styles (max-width: 375px) */
+@media (max-width: 375px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .btn-submit .btn-text {
+        font-size: 16px;
+    }
+}

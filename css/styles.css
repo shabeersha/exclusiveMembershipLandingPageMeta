@@ -229,6 +229,16 @@ p {
     margin-right: 4px;
 }
 
+.program-title {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    color: var(--secondary-teal);
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
 .hero-subheading {
     font-size: 1.2rem;
     margin-bottom: 30px;

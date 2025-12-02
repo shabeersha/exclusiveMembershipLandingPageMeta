@@ -32,11 +32,11 @@ document.addEventListener('DOMContentLoaded', function () {
             utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
         });
     }
-
     // Form Submission Handler
     const form = document.getElementById('leadForm');
     if (form) {
         form.addEventListener('submit', function (e) {
+            console.log("Form submitted", e);
             e.preventDefault();
 
             // Basic validation
@@ -45,6 +45,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const phone = document.getElementById('international_PhoneNumber').value;
             const status = document.getElementById('current-status').value;
 
+
+
             // Phone Validation
             if (iti && !iti.isValidNumber()) {
                 alert("Please enter a valid phone number.");
@@ -52,20 +54,46 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             if (name && email && phone && status) {
-                // Get full number with country code
-                const fullPhoneNumber = iti ? iti.getNumber() : phone;
-
                 // Simulate successful submission
                 const btn = form.querySelector('.btn-submit');
-                const originalText = btn.innerHTML;
 
                 btn.innerHTML = 'Submitting...';
                 btn.disabled = true;
 
-                setTimeout(() => {
-                    // Redirect to Thank You page
-                    window.location.href = 'thankyou.html';
-                }, 1500);
+                // Add missing fields required by Zoho
+                if (iti) {
+                    const countryData = iti.getSelectedCountryData();
+                    const dialCode = "+" + countryData.dialCode;
+
+                    // Create or update hidden input for country code
+                    let countryCodeInput = form.querySelector('input[name="PhoneNumber_countrycodeval"]');
+                    if (!countryCodeInput) {
+                        countryCodeInput = document.createElement('input');
+                        countryCodeInput.type = 'hidden';
+                        countryCodeInput.name = 'PhoneNumber_countrycodeval';
+                        form.appendChild(countryCodeInput);
+                    }
+                    countryCodeInput.value = dialCode;
+                }
+
+                // Handle Name1_Last as requested (create hidden input)
+                let lastNameInput = form.querySelector('input[name="Name1_Last"]');
+                if (!lastNameInput) {
+                    lastNameInput = document.createElement('input');
+                    lastNameInput.type = 'hidden';
+                    lastNameInput.name = 'Name1_Last';
+                    form.appendChild(lastNameInput);
+                }
+                lastNameInput.value = 'NULL';
+
+                // Set redirect URL dynamically
+                // let redirectUrlInput = form.querySelector('input[name="zf_redirect_url"]');
+                // if (redirectUrlInput) {
+                //     redirectUrlInput.value = window.location.origin + '/thankyou.html';
+                // }
+
+                // Submit the form programmatically
+                form.submit();
             }
         });
     }

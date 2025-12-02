@@ -86,11 +86,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 lastNameInput.value = 'NULL';
 
-                // Set redirect URL dynamically
-                // let redirectUrlInput = form.querySelector('input[name="zf_redirect_url"]');
-                // if (redirectUrlInput) {
-                //     redirectUrlInput.value = window.location.origin + '/thankyou.html';
-                // }
 
                 // Submit the form programmatically
                 form.submit();

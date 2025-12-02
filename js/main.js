@@ -131,4 +131,22 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
+
+    // Video.js Single Playback Logic
+    const playerIds = ['vid1', 'vid2', 'vid3', 'vid4'];
+    playerIds.forEach(id => {
+        const player = videojs(id);
+        player.ready(() => {
+            player.on('play', () => {
+                playerIds.forEach(otherId => {
+                    if (otherId !== id) {
+                        const otherPlayer = videojs(otherId);
+                        if (!otherPlayer.paused()) {
+                            otherPlayer.pause();
+                        }
+                    }
+                });
+            });
+        });
+    });
 });

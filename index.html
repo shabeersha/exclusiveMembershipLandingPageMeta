@@ -21,26 +21,29 @@
     <!-- intl-tel-input CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
 
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
 
-    <!-- Meta Pixel Code -->
-    <script>
-        !function (f, b, e, v, n, t, s) {
-            if (f.fbq) return; n = f.fbq = function () {
-                n.callMethod ?
-                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
-            };
-            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
-            n.queue = []; t = b.createElement(e); t.async = !0;
-            t.src = v; s = b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t, s)
-        }(window, document, 'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', '1258837906074179');
-        fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-            src="https://www.facebook.com/tr?id=1258837906074179&ev=PageView&noscript=1" /></noscript>
-    <!-- End Meta Pixel Code -->
+<!-- Meta Pixel Code -->
+<script>
+    !function (f, b, e, v, n, t, s) {
+        if (f.fbq) return; n = f.fbq = function () {
+            n.callMethod ?
+                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+        };
+        if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+        n.queue = []; t = b.createElement(e); t.async = !0;
+        t.src = v; s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s)
+    }(window, document, 'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1258837906074179');
+    fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=1258837906074179&ev=PageView&noscript=1" /></noscript>
+<!-- End Meta Pixel Code -->
 </head>
 
 <body>
@@ -86,20 +89,76 @@
 
                 <p class="hero-subheading">Don't waste years figuring it out alone. Get a personalized roadmap.</p>
 
-                <div class="pain-points-box">
-                    <p class="pain-point-title">🛑 Stop Guessing, Start Building.</p>
-                    <p>Most beginners quit because they lack direction. We fix that.</p>
+                <div class="problem-statement-box">
+                    <h2 class="problem-headline">🛑 Stop Guessing, Start Building.</h2>
+                    <p class="problem-description">Most beginners quit because they lack direction. We fix that.</p>
                 </div>
 
-                <ul class="benefits-list">
-                    <li><span class="check-icon">✅</span> <strong>Personalized Career Roadmap</strong></li>
-                    <li><span class="check-icon">✅</span> <strong>24/7 Tech Support</strong></li>
-                    <li><span class="check-icon">✅</span> <strong>Professional Resume Crafting</strong></li>
-                    <li><span class="check-icon">✅</span> <strong>Mock Interview with Industry Expert</strong></li>
-                    <li><span class="check-icon">✅</span> <strong>Monthly Career Guidance</strong></li>
-                    <li><span class="check-icon">✅</span> <strong>Monthly Expert Talks</strong></li>
-                    <li><span class="check-icon">✅</span> <strong>Completion Certificate</strong></li>
-                </ul>
+                <div class="benefits-grid">
+                    <!-- Card 1: Cyan -->
+                    <div class="benefit-card accent-cyan">
+                        <div class="card-icon">
+                            <i class="ph ph-map-trifold"></i>
+                        </div>
+                        <h3 class="card-title">Personalized Career Roadmap</h3>
+                    </div>
+
+                    <!-- Card 2: Purple -->
+                    <div class="benefit-card accent-purple">
+                        <div class="card-icon">
+                            <i class="ph ph-headset"></i>
+                        </div>
+                        <h3 class="card-title">24/7 Tech Support</h3>
+                    </div>
+
+                    <!-- Card 3: Pink -->
+                    <div class="benefit-card accent-pink">
+                        <div class="card-icon">
+                            <i class="ph ph-file-text"></i>
+                        </div>
+                        <h3 class="card-title">Professional Resume Crafting</h3>
+                    </div>
+
+                    <!-- Card 4: Green -->
+                    <div class="benefit-card accent-green">
+                        <div class="card-icon">
+                            <i class="ph ph-handshake"></i>
+                        </div>
+                        <h3 class="card-title">Mock Interview with Expert</h3>
+                    </div>
+
+                    <!-- Card 5: Orange -->
+                    <div class="benefit-card accent-orange">
+                        <div class="card-icon">
+                            <i class="ph ph-compass"></i>
+                        </div>
+                        <h3 class="card-title">Monthly Career Guidance</h3>
+                    </div>
+
+                    <!-- Card 6: Blue -->
+                    <div class="benefit-card accent-blue">
+                        <div class="card-icon">
+                            <i class="ph ph-microphone-stage"></i>
+                        </div>
+                        <h3 class="card-title">Monthly Expert Talks</h3>
+                    </div>
+
+                    <!-- Card 7: Red -->
+                    <div class="benefit-card accent-red">
+                        <div class="card-icon">
+                            <i class="ph ph-certificate"></i>
+                        </div>
+                        <h3 class="card-title">Completion Certificate</h3>
+                    </div>
+
+                    <!-- Card 8: Lime -->
+                    <div class="benefit-card accent-lime">
+                        <div class="card-icon">
+                            <i class="ph ph-users-three"></i>
+                        </div>
+                        <h3 class="card-title">Community Access</h3>
+                    </div>
+                </div>
 
 
             </div>
@@ -174,7 +233,44 @@
         </div>
     </section>
 
+    <!-- Know More Section (Videos) -->
+    <section class="know-more-section">
+        <div class="container">
+            <h2 class="section-title text-center">Know More</h2>
+            <div class="video-grid">
+                <!-- Video 1 -->
+                <div class="video-card">
+                    <video id="vid1" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto"
+                        width="640" height="264" poster="https://img.youtube.com/vi/wdYBzL56Be4/maxresdefault.jpg"
+                        data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=wdYBzL56Be4"}] }'>
+                    </video>
+                </div>
+                <!-- Video 2 -->
+                <div class="video-card">
+                    <video id="vid2" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto"
+                        width="640" height="264" poster="https://img.youtube.com/vi/ioBS_bubZjI/maxresdefault.jpg"
+                        data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=ioBS_bubZjI"}] }'>
 
+                    </video>
+                </div>
+                <!-- Video 3 -->
+                <div class="video-card">
+                    <video id="vid3" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto"
+                        width="640" height="264" poster="https://img.youtube.com/vi/HnKe-bTVRY0/maxresdefault.jpg"
+                        data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=HnKe-bTVRY0"}] }'>
+                    </video>
+                </div>
+                <!-- Video 4 -->
+                <div class="video-card">
+                    <video id="vid4" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto"
+                        width="640" height="264" poster="https://img.youtube.com/vi/eymIdH_43xo/maxresdefault.jpg"
+                        data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=eymIdH_43xo"}] }'>
+
+                    </video>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Program Highlights -->
     <!-- FAQ Section -->
@@ -261,6 +357,15 @@
         </div>
     </section>
 
+    <!-- Big CTA Section -->
+    <section class="big-cta-section">
+        <div class="container text-center">
+            <h2 class="cta-title">Ready to Launch Your IT Career?</h2>
+            <p class="cta-subtitle">Don't wait for the perfect moment. Start building your future today.</p>
+            <a href="#hero-form" class="btn btn-primary btn-lg cta-button">Get My Roadmap Now</a>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer>
         <div class="container footer-content">
@@ -282,6 +387,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-youtube/2.6.1/Youtube.min.js"></script>
     <!-- intl-tel-input JS -->
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
+    <!-- Video.js JS -->
+    <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-youtube/3.0.1/Youtube.min.js"></script>
     <script src="js/main.js"></script>
 </body>
 

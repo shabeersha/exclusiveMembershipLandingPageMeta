@@ -15,9 +15,13 @@
         margin: 0 auto 30px;
     }
 
-    .benefits-list {
-        display: inline-block;
-        text-align: left;
+    .benefits-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .video-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .form-card {
@@ -102,6 +106,23 @@
 
     .form-card {
         padding: 20px;
+    }
+
+    .benefits-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .video-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cta-title {
+        font-size: 1.8rem;
+    }
+
+    .cta-subtitle {
+        font-size: 1rem;
     }
 
     .hero-badge {

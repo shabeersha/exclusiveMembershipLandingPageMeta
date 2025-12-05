@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'video/youtube',
             src: 'https://www.youtube.com/watch?v=oyQu4euAwe4',
             youtube: {
-                ytControls: 2,
+                ytControls: 0,
                 customVars: {
                     wmode: 'transparent',
                     rel: 0,
@@ -421,3 +421,9 @@ autoScroll = setInterval(scrollUp, 2000);
 updateActiveItem();
 
 //Highlights and perks end
+
+
+
+
+
+

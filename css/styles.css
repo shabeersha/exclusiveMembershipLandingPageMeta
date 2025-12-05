@@ -765,6 +765,13 @@ p {
     transition: transform 0.5s ease-in-out;
     width: max-content;
     /* Ensure track is wide enough */
+    cursor: grab;
+    touch-action: pan-y;
+    /* Allow vertical scroll, handle horizontal in JS */
+}
+
+.carousel-track:active {
+    cursor: grabbing;
 }
 
 .video-card {

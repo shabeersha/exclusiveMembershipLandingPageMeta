@@ -187,6 +187,193 @@ document.addEventListener('DOMContentLoaded', function () {
         carouselTrack.addEventListener('mouseleave', () => {
             if (!isVideoPlaying) startCarousel();
         });
+
+        // Drag/Swipe Logic
+        let isDragging = false;
+        let startPos = 0;
+        let currentTranslate = 0;
+        let prevTranslate = 0;
+        let animationID;
+        let startTime = 0;
+
+        // Touch events
+        carouselTrack.addEventListener('touchstart', touchStart);
+        carouselTrack.addEventListener('touchend', touchEnd);
+        carouselTrack.addEventListener('touchmove', touchMove);
+
+        // Mouse events
+        carouselTrack.addEventListener('mousedown', touchStart);
+        carouselTrack.addEventListener('mouseup', touchEnd);
+        carouselTrack.addEventListener('mouseleave', () => {
+            if (isDragging) touchEnd();
+            if (!isVideoPlaying) startCarousel();
+        });
+        carouselTrack.addEventListener('mousemove', touchMove);
+
+        // Disable context menu
+        carouselTrack.oncontextmenu = function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            return false;
+        };
+
+        function touchStart(index) {
+            return function (event) {
+                stopCarousel(); // Stop auto-scroll on interaction
+                isDragging = true;
+                startTime = new Date().getTime();
+                startPos = getPositionX(event);
+                animationID = requestAnimationFrame(animation);
+                carouselTrack.style.cursor = 'grabbing';
+                carouselTrack.style.transition = 'none'; // Remove transition for direct 1:1 movement
+            }
+        }
+
+        function touchEnd() {
+            isDragging = false;
+            cancelAnimationFrame(animationID);
+            carouselTrack.style.cursor = 'grab';
+            carouselTrack.style.transition = 'transform 0.5s ease-in-out';
+
+            const movedBy = currentTranslate - prevTranslate;
+            const endTime = new Date().getTime();
+            const timeElapsed = endTime - startTime;
+
+            // Determine if it's a swipe or just a drag
+            // Threshold for swipe: significant movement or fast flick
+            if (movedBy < -50 || (movedBy < -10 && timeElapsed < 300)) {
+                carouselIndex += 1;
+            } else if (movedBy > 50 || (movedBy > 10 && timeElapsed < 300)) {
+                carouselIndex -= 1;
+            }
+
+            // Boundary checks
+            if (carouselIndex < 0) carouselIndex = 0;
+            if (carouselIndex > totalCards) carouselIndex = totalCards; // Allow going to clone end
+
+            setPositionByIndex();
+
+            if (!isVideoPlaying) startCarousel();
+        }
+
+        function touchMove(event) {
+            if (isDragging) {
+                const currentPosition = getPositionX(event);
+                currentTranslate = prevTranslate + currentPosition - startPos;
+            }
+        }
+
+        function getPositionX(event) {
+            return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
+        }
+
+        function animation() {
+            setSliderPosition();
+            if (isDragging) requestAnimationFrame(animation);
+        }
+
+        function setSliderPosition() {
+            carouselTrack.style.transform = `translateX(${currentTranslate}px)`;
+        }
+
+        function setPositionByIndex() {
+            // Update the main moveCarousel logic's index
+            // We need to sync the manual drag with the auto-scroll index
+
+            // Calculate target position
+            const targetTranslate = carouselIndex * -totalWidth;
+            prevTranslate = targetTranslate;
+            currentTranslate = targetTranslate;
+
+            carouselTrack.style.transform = `translateX(${targetTranslate}px)`;
+
+            // Handle infinite loop reset if needed (similar to moveCarousel)
+            if (carouselIndex >= totalCards) {
+                setTimeout(() => {
+                    carouselTrack.style.transition = 'none';
+                    carouselIndex = 0;
+                    const resetTranslate = 0;
+                    prevTranslate = resetTranslate;
+                    currentTranslate = resetTranslate;
+                    carouselTrack.style.transform = `translateX(${resetTranslate}px)`;
+                }, 500);
+            }
+        }
+
+        // Update the moveCarousel function to sync with manual drag state
+        // We need to override the original moveCarousel to use the shared variables if possible,
+        // or just update the shared variables inside it.
+        // Since moveCarousel is defined above in the same scope, we can modify it or just ensure
+        // it updates `prevTranslate` and `currentTranslate`.
+
+        // Let's redefine moveCarousel to be safe and use the shared state
+        // We need to re-assign the outer moveCarousel function
+        // But `moveCarousel` was defined as a function declaration, so it's hoisted but we can overwrite it if we change it to a var/let or just hook into it.
+        // Actually, the simplest way is to update `prevTranslate` inside the original `moveCarousel` loop?
+        // No, better to replace the logic here since we are inside the `if (carouselTrack)` block.
+
+        // Overwriting the previous moveCarousel logic with one that respects the drag state
+        carouselInterval = setInterval(() => {
+            if (isVideoPlaying) return;
+
+            carouselIndex++;
+            carouselTrack.style.transition = 'transform 0.5s ease-in-out';
+            const targetTranslate = carouselIndex * -totalWidth;
+            carouselTrack.style.transform = `translateX(${targetTranslate}px)`;
+
+            // Sync drag state
+            prevTranslate = targetTranslate;
+            currentTranslate = targetTranslate;
+
+            if (carouselIndex >= totalCards) {
+                setTimeout(() => {
+                    carouselTrack.style.transition = 'none';
+                    carouselIndex = 0;
+                    const resetTranslate = 0;
+                    prevTranslate = resetTranslate;
+                    currentTranslate = resetTranslate;
+                    carouselTrack.style.transform = `translateX(${resetTranslate}px)`;
+                }, 500);
+            }
+        }, 3000);
+
+        // Clear the old interval started at the top
+        clearInterval(carouselInterval);
+        // Re-assign the startCarousel to use this new interval logic
+        startCarousel = function () {
+            if (carouselInterval) clearInterval(carouselInterval);
+            carouselInterval = setInterval(() => {
+                if (isVideoPlaying) return;
+
+                carouselIndex++;
+                carouselTrack.style.transition = 'transform 0.5s ease-in-out';
+                const targetTranslate = carouselIndex * -totalWidth;
+                carouselTrack.style.transform = `translateX(${targetTranslate}px)`;
+
+                prevTranslate = targetTranslate;
+                currentTranslate = targetTranslate;
+
+                if (carouselIndex >= totalCards) {
+                    setTimeout(() => {
+                        carouselTrack.style.transition = 'none';
+                        carouselIndex = 0;
+                        const resetTranslate = 0;
+                        prevTranslate = resetTranslate;
+                        currentTranslate = resetTranslate;
+                        carouselTrack.style.transform = `translateX(${resetTranslate}px)`;
+                    }, 500);
+                }
+            }, 3000);
+        };
+
+        // Restart with new logic
+        startCarousel();
+
+        // Fix touchStart call
+        carouselTrack.removeEventListener('touchstart', touchStart);
+        carouselTrack.removeEventListener('mousedown', touchStart);
+        carouselTrack.addEventListener('touchstart', touchStart(carouselIndex));
+        carouselTrack.addEventListener('mousedown', touchStart(carouselIndex));
     }
 
     // Video.js Single Playback Logic & Carousel Control

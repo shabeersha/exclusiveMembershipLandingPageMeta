@@ -133,12 +133,75 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Video.js Single Playback Logic
+    // Video Carousel Logic
+    const carouselTrack = document.getElementById('videoCarouselTrack');
+    let carouselInterval;
+    let carouselIndex = 0;
+    let isVideoPlaying = false;
+    let startCarousel = () => { };
+    let stopCarousel = () => { };
+
+    if (carouselTrack) {
+        const cards = carouselTrack.querySelectorAll('.video-card');
+        const cardWidth = 300;
+        const gap = 20;
+        const totalWidth = cardWidth + gap;
+        const totalCards = cards.length;
+
+        // Clone cards
+        cards.forEach(card => {
+            const clone = card.cloneNode(true);
+            carouselTrack.appendChild(clone);
+        });
+
+        function moveCarousel() {
+            if (isVideoPlaying) return;
+
+            carouselIndex++;
+            carouselTrack.style.transition = 'transform 0.5s ease-in-out';
+            carouselTrack.style.transform = `translateX(-${carouselIndex * totalWidth}px)`;
+
+            if (carouselIndex >= totalCards) {
+                setTimeout(() => {
+                    carouselTrack.style.transition = 'none';
+                    carouselIndex = 0;
+                    carouselTrack.style.transform = `translateX(0)`;
+                }, 500);
+            }
+        }
+
+        startCarousel = function () {
+            if (carouselInterval) clearInterval(carouselInterval);
+            carouselInterval = setInterval(moveCarousel, 3000);
+        };
+
+        stopCarousel = function () {
+            clearInterval(carouselInterval);
+        };
+
+        // Initial start
+        startCarousel();
+
+        // Pause on hover
+        carouselTrack.addEventListener('mouseenter', stopCarousel);
+        carouselTrack.addEventListener('mouseleave', () => {
+            if (!isVideoPlaying) startCarousel();
+        });
+    }
+
+    // Video.js Single Playback Logic & Carousel Control
     const playerIds = ['brototype-video', 'vid1', 'vid2', 'vid3', 'vid4'];
     playerIds.forEach(id => {
         const player = videojs(id);
         player.ready(() => {
             player.on('play', () => {
+                // Stop carousel
+                if (stopCarousel) {
+                    isVideoPlaying = true;
+                    stopCarousel();
+                }
+
+                // Pause other videos
                 playerIds.forEach(otherId => {
                     if (otherId !== id) {
                         const otherPlayer = videojs(otherId);
@@ -148,6 +211,24 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 });
             });
+
+            const resumeCarousel = () => {
+                setTimeout(() => {
+                    let anyPlaying = false;
+                    playerIds.forEach(pid => {
+                        const p = videojs(pid);
+                        if (p && !p.paused() && !p.ended()) anyPlaying = true;
+                    });
+
+                    if (!anyPlaying && startCarousel) {
+                        isVideoPlaying = false;
+                        startCarousel();
+                    }
+                }, 3000);
+            };
+
+            player.on('pause', resumeCarousel);
+            player.on('ended', resumeCarousel);
         });
     });
     // UTM Parameter Tracking
@@ -421,6 +502,8 @@ autoScroll = setInterval(scrollUp, 2000);
 updateActiveItem();
 
 //Highlights and perks end
+
+
 
 
 

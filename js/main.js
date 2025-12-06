@@ -101,8 +101,32 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
 
-                // Submit the form programmatically
-                form.submit();
+                // Google Sheets Submission
+                const googleScriptURL = 'https://script.google.com/macros/s/AKfycbwtEiPNq3-C143Cr496HHUBUgWNf24MeMMonF2S9FqW83P3y_c4m5WifEv4Se6qEjt8Sg/exec';
+
+                // Create FormData for Google Sheets
+                // We need to re-create it or append to it because we added hidden inputs to the DOM *after* page load but *before* this point?
+                // Actually `new FormData(form)` captures correct current DOM state of form.
+                const finalFormData = new FormData(form);
+
+                // Ensure Google Sheets gets the FULL phone number (including country code)
+                if (iti) {
+                    const fullPhone = iti.getNumber();
+                    finalFormData.set('PhoneNumber_countrycode', fullPhone); // Overwrite/Set specific field expected by Sheet if needed, or just rely on 'PhoneNumber_countrycode' input if it exists. 
+                    // Note: 'PhoneNumber_countrycode' is the name of the input field in the form.
+                }
+
+                // Submit to Google Sheets (Async)
+                fetch(googleScriptURL, {
+                    method: 'POST',
+                    body: finalFormData
+                })
+                    .then(response => console.log('Google Sheet Success!', response))
+                    .catch(error => console.error('Google Sheet Error!', error.message))
+                    .finally(() => {
+                        // Submit to Zoho (original action)
+                        form.submit();
+                    });
             }
         });
     }

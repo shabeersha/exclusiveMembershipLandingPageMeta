@@ -806,6 +806,9 @@
                             })
                             .catch(error => {
                                 console.error('Network/fetch error:', error);
+                            })
+                            .finally(() => {
+                                form.submit();
                             });
                     }
                 });

@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     countryCodeInput.value = dialCode;
                 }
 
-                // Handle Name1_Last as requested (create hidden input)
+                // Handle Name splitting and Name1_Last
                 let lastNameInput = form.querySelector('input[name="Name1_Last"]');
                 if (!lastNameInput) {
                     lastNameInput = document.createElement('input');
@@ -84,7 +84,21 @@ document.addEventListener('DOMContentLoaded', function () {
                     lastNameInput.name = 'Name1_Last';
                     form.appendChild(lastNameInput);
                 }
-                lastNameInput.value = 'NULL';
+
+                let fullName = name.trim();
+                let firstSpaceIndex = fullName.indexOf(' ');
+
+                if (firstSpaceIndex !== -1) {
+                    // Name has a space, split it
+                    let firstNameVal = fullName.substring(0, firstSpaceIndex);
+                    let lastNameVal = fullName.substring(firstSpaceIndex + 1);
+
+                    // Update the visible Input to just be the First Name
+                    document.getElementById('name').value = firstNameVal;
+                    lastNameInput.value = lastNameVal;
+                } else {
+                    lastNameInput.value = 'NULL';
+                }
 
 
                 // Submit the form programmatically

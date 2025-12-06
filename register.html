@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon-light.png" media="(prefers-color-scheme: light)">
+    <link rel="icon" href="images/favicon-dark.png" media="(prefers-color-scheme: dark)">
+
+    <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/images/favicons/favicon.svg" />
+    <link rel="shortcut icon" href="/images/favicons/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Brototype" />
+    <link rel="manifest" href="/images/favicons/site.webmanifest" />
+
+    <!-- Title -->
+    <title>Register | Brototype Exclusive Membership Program</title>
+    <meta name="description"
+        content="Register for Brototype's Exclusive Membership Program. Get a personalized roadmap, career guidance and expert mock interviews.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://api.fontshare.com/v2/css?f[]=switzer@300,400,500,600,700&f[]=general-sans@300,400,500,600,700&display=swap"
+        rel="stylesheet">
+
+    <!-- intl-tel-input CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
+
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary-yellow: #E50914;
+            /* Primary Red */
+            --secondary-teal: #E50914;
+            /* Primary Red */
+            --accent-orange: #E50914;
+            --dark-bg: #050505;
+            /* Almost Black */
+            --card-bg: #151515;
+            /* Dark Gray */
+            --text-primary: #ffffff;
+            /* White */
+            --text-secondary: #d4d4d8;
+            /* Light Gray */
+            --text-muted: #a1a1aa;
+            /* Muted Gray */
+            --font-family: 'General Sans', sans-serif;
+            --font-heading: 'Switzer', sans-serif;
+            --primary-hover: #8A1823;
+            /* Darker Red */
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .highlight-yellow {
+            color: var(--primary-yellow);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-yellow);
+            color: white;
+            /* Keep white text on red button */
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            background-color: var(--primary-hover);
+            box-shadow: 0 4px 15px rgba(178, 31, 45, 0.4);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-teal);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(138, 24, 35, 0.4);
+        }
+
+        .btn-sm {
+            padding: 10px 20px;
+            font-size: 14px;
+        }
+
+        .btn-lg {
+            padding: 16px 32px;
+            font-size: 18px;
+            width: 100%;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary-yellow), var(--primary-hover));
+            color: white;
+            width: 100%;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 1rem;
+            box-shadow: 0 8px 20px rgba(178, 31, 45, 0.25);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.2;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-submit .btn-text {
+            font-size: 18px;
+            font-family: var(--font-heading);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-submit .btn-subtext {
+            font-size: 12px;
+            font-weight: 500;
+            opacity: 0.9;
+            margin-top: 4px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(178, 31, 45, 0.4);
+            background: linear-gradient(135deg, #c42332, #8a1823);
+        }
+
+        /* Sticky Header */
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding: 60px 0;
+            position: relative;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 55% 45%;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background-color: rgba(178, 31, 45, 0.1);
+            color: var(--primary-yellow);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(178, 31, 45, 0.3);
+            box-shadow: 0 4px 15px rgba(178, 31, 45, 0.1);
+        }
+
+        .hero-member-count {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-size: 14px;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            margin-left: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-member-count .count-icon {
+            margin-right: 6px;
+        }
+
+        .hero-member-count .counter-value {
+            font-weight: 700;
+            color: var(--secondary-teal);
+            margin-right: 4px;
+        }
+
+        .program-title {
+            font-size: 1.1rem;
+            font-family: var(--font-heading);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            color: var(--secondary-teal);
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .hero-subheading {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        /* Hero section Videojs */
+        .vjs-poster img {
+            height: 100%;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        /* phone-countrycode-color */
+        .phone-countrycode-color {
+            color: #000;
+        }
+
+        /* Form Card */
+        .form-card {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid #ffffff;
+            /* position: sticky; */
+            /* Removed sticky for standalone */
+            /* top: 100px; */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .form-header h3 {
+            margin-bottom: 5px;
+            color: #111111;
+        }
+
+        .form-header p {
+            font-size: 14px;
+            color: var(--primary-yellow);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #111111;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 14px 16px;
+            background-color: #f5f5f5;
+            border: 1px solid #cccccc;
+            border-radius: 8px;
+            color: #111111;
+            font-size: 16px;
+            transition: all 0.3s;
+            appearance: none;
+            /* Remove default arrow for select */
+        }
+
+        .form-group select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23111111' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-yellow);
+            box-shadow: 0 0 0 3px rgba(178, 31, 45, 0.15);
+            background-color: #ffffff;
+        }
+
+        /* intl-tel-input overrides */
+        .iti {
+            width: 100%;
+            display: block;
+        }
+
+        .iti__flag-container {
+            border-radius: 8px 0 0 8px;
+        }
+
+        .iti__selected-flag {
+            background-color: rgba(0, 0, 0, 0.05);
+            border-right: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .iti__country-list {
+            background-color: #ffffff !important;
+            border: 1px solid rgba(0, 0, 0, 0.1) !important;
+            color: #111111 !important;
+        }
+
+        .iti__country {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .iti__country-name {
+            color: #111111 !important;
+        }
+
+        .iti__dial-code {
+            color: #111111 !important;
+        }
+
+        .iti__country:hover,
+        .iti__country.iti__highlight {
+            background-color: rgba(0, 0, 0, 0.05) !important;
+        }
+
+        /* Ensure input has correct padding for the flag */
+        .form-group input[type="tel"] {
+            padding-left: 110px !important;
+            /* Adjust based on flag width */
+        }
+
+        .trust-signals-small {
+            display: flex;
+            gap: 15px;
+            font-size: 12px;
+            color: #555555;
+            margin-bottom: 5px;
+        }
+
+        .form-footer {
+            text-align: center;
+            font-size: 12px;
+            color: #555555;
+            margin-top: 10px;
+        }
+
+        /* Specific styles for standalone form page */
+        body {
+            background-color: var(--background-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .standalone-page-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            background: radial-gradient(circle at center, rgba(229, 9, 20, 0.05) 0%, transparent 70%);
+        }
+
+        .standalone-form-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .standalone-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        /* Responsive Styles Inline */
+        /* Tablet Styles (max-width: 1024px) */
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .form-card {
+                position: static;
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            h1 {
+                font-size: 2.8rem;
+            }
+        }
+
+        /* Mobile Styles (max-width: 768px) */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .hero-section {
+                padding: 40px 0;
+            }
+
+            .mobile-only-cta {
+                display: block;
+                margin-top: 20px;
+            }
+
+            .hero-form-wrapper {
+                margin-top: 40px;
+            }
+
+            .btn-lg {
+                width: 100%;
+            }
+
+            .header-content .btn {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .form-card {
+                padding: 20px;
+            }
+
+            .cta-title {
+                font-size: 1.8rem;
+            }
+
+            .cta-subtitle {
+                font-size: 1rem;
+            }
+
+            .hero-badge {
+                font-size: 12px;
+                padding: 6px 12px;
+                white-space: normal;
+                text-align: center;
+            }
+        }
+
+        /* Small Mobile Styles (max-width: 375px) */
+        @media (max-width: 375px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .btn-submit .btn-text {
+                font-size: 16px;
+            }
+        }
+    </style>
+
+    <!-- Meta Pixel Code -->
+    <script>
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1258837906074179');
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=1258837906074179&ev=PageView&noscript=1" /></noscript>
+    <!-- End Meta Pixel Code -->
+</head>
+
+<body>
+
+    <div class="standalone-page-wrapper">
+        <div class="standalone-form-container">
+            <div class="standalone-logo">
+                <a href="index.html" target="_top"> <!-- target_top for iframe safety -->
+                    <img src="images/Brototype-white-logo-short-300x89.png" alt="Brototype"
+                        style="height: 50px; width: auto;">
+                </a>
+            </div>
+
+            <div class="form-card" id="hero-form">
+                <div class="form-header">
+                    <h3>Book Your Learning Consultation</h3>
+                    <p>Speak to a Senior Career Advisor</p>
+                </div>
+                <!-- COPIED FORM FROM index.html -->
+                <form id="leadForm"
+                    action="https://forms.zohopublic.in/brototype/form/ExclusiveMembershipProgram/formperma/L8HEBs106e9HWdzN6QDu0_qUl_4ddJRWe60c_T9ql5E/htmlRecords/submit"
+                    method="POST" accept-charset='UTF-8' enctype='application/x-www-form-urlencoded'>
+                    <input type="text" name="utm_hp" style="display:none" tabindex="-1" autocomplete="off">
+                    <input type="hidden" name="zf_referrer_name"
+                        value=""><!-- To Track referrals , place the referrer name within the " " in the above hidden input field -->
+                    <input type="hidden" name="zf_redirect_url"
+                        value=""><!-- To redirect to a specific page after record submission , place the respective url within the " " in the above hidden input field -->
+                    <input type="hidden" name="zc_gad"
+                        value=""><!-- If GCLID is enabled in Zoho CRM Integration, click details of AdWords Ads will be pushed to Zoho CRM -->
+                    <input type="hidden" name="utm_source" value="" />
+                    <input type="hidden" name="utm_medium" value="" />
+                    <input type="hidden" name="utm_campaign" value="" />
+                    <input type="hidden" name="utm_term" value="" />
+                    <input type="hidden" name="utm_content" value="" />
+                    <input type="hidden" name="utm_id" value="" />
+                    <input type="hidden" name="utm_adgroup" value="" />
+                    <input type="hidden" name="utm_matchtype" value="" />
+                    <input type="hidden" name="utm_audience" value="" />
+                    <input type="hidden" name="utm_adgroupid" value="" />
+                    <input type="hidden" name="ref" value="" />
+                    <input type="hidden" name="utm_network" value="" />
+                    <input type="hidden" name="utm_placement" value="" />
+                    <input type="hidden" name="utm_landingpage" value="New_HTML_LandingPage_Standalone" />
+                    <div class="form-group">
+                        <label for="name" class="form-label">Full Name</label>
+                        <input type="text" id="name" maxlength="255" name="Name1_First" fieldType="7"
+                            placeholder="e.g. Rahul Kumar" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" id="email" maxlength="255" name="Email" fieldType="9"
+                            placeholder="rahul@example.com" required>
+                    </div>
+                    <div class="form-group phone-countrycode-color">
+                        <label for="phone" class="form-label">WhatsApp Number</label>
+                        <input type="tel" compname="PhoneNumber" name="PhoneNumber_countrycode" phoneFormat="1"
+                            isCountryCodeEnabled=true maxlength="20" value="" fieldType=11
+                            id="international_PhoneNumber" placeholder="9037847538" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="current-status" class="form-label">Current Status</label>
+                        <select id="current-status" name="Dropdown" required>
+                            <option value="" selected disabled hidden>Select your current status</option>
+                            <option value="College Student">College Student</option>
+                            <option value="Recent Graduate">Recent Graduate</option>
+                            <option value="Working Professional">Working Professional</option>
+                            <option value="Career Gap / Looking for Job">Career Gap / Looking for Job</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-submit">
+                        <span class="btn-text">Get My Roadmap Now</span>
+                        <span class="btn-subtext">Limited slots available for today</span>
+                    </button>
+
+                    <div class="trust-signals-small text-center">
+                        <span>🔒 100% Secure & Spam Free</span>
+                    </div>
+                </form>
+            </div>
+
+            <p style="text-align: center; margin-top: 1rem; color: var(--text-secondary); font-size: 0.9rem;">
+                Back to <a href="index.html" target="_top" style="color: var(--primary-color);">Home Page</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Footer Simple -->
+    <footer>
+        <div class="container footer-content" style="justify-content: center; padding: 20px 0;">
+            <p class="copyright">© 2025 Brototype. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- intl-tel-input JS -->
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
+
+    <!-- Inlined Register JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize intl-tel-input
+            const phoneInput = document.querySelector("#international_PhoneNumber");
+            let iti;
+            if (phoneInput) {
+                iti = window.intlTelInput(phoneInput, {
+                    initialCountry: "in",
+                    separateDialCode: true,
+                    utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
+                });
+            }
+
+            // Form Submission Handler
+            const form = document.getElementById('leadForm');
+            if (form) {
+                form.addEventListener('submit', function (e) {
+                    // console.log("Form submitted", e);
+                    // We do NOT prevent default here unless validation fails, 
+                    // but the original code did prevent default and then submitted programmatically.
+                    // We will follow the original logic.
+                    e.preventDefault();
+
+                    // Basic validation
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const phone = document.getElementById('international_PhoneNumber').value;
+                    const status = document.getElementById('current-status').value;
+
+                    // Phone Validation
+                    if (iti && !iti.isValidNumber()) {
+                        alert("Please enter a valid phone number.");
+                        return;
+                    }
+
+                    if (name && email && phone && status) {
+                        // Simulate successful submission
+                        const btn = form.querySelector('.btn-submit');
+
+                        btn.innerHTML = 'Submitting...';
+                        btn.disabled = true;
+
+                        // Add missing fields required by Zoho
+                        if (iti) {
+                            const countryData = iti.getSelectedCountryData();
+                            const dialCode = "+" + countryData.dialCode;
+
+                            // Create or update hidden input for country code
+                            let countryCodeInput = form.querySelector('input[name="PhoneNumber_countrycodeval"]');
+                            if (!countryCodeInput) {
+                                countryCodeInput = document.createElement('input');
+                                countryCodeInput.type = 'hidden';
+                                countryCodeInput.name = 'PhoneNumber_countrycodeval';
+                                form.appendChild(countryCodeInput);
+                            }
+                            countryCodeInput.value = dialCode;
+                        }
+
+                        // Handle Name splitting and Name1_Last
+                        let lastNameInput = form.querySelector('input[name="Name1_Last"]');
+                        if (!lastNameInput) {
+                            lastNameInput = document.createElement('input');
+                            lastNameInput.type = 'hidden';
+                            lastNameInput.name = 'Name1_Last';
+                            form.appendChild(lastNameInput);
+                        }
+
+                        let fullName = name.trim();
+                        let firstSpaceIndex = fullName.indexOf(' ');
+
+                        if (firstSpaceIndex !== -1) {
+                            // Name has a space, split it
+                            let firstNameVal = fullName.substring(0, firstSpaceIndex);
+                            let lastNameVal = fullName.substring(firstSpaceIndex + 1);
+
+                            // Update the visible Input to just be the First Name (so Zoho gets the right First Name)
+                            document.getElementById('name').value = firstNameVal;
+                            lastNameInput.value = lastNameVal;
+                        } else {
+                            lastNameInput.value = 'NULL';
+                        }
+
+
+                        const googleScriptURL = 'https://script.google.com/macros/s/AKfycbwtEiPNq3-C143Cr496HHUBUgWNf24MeMMonF2S9FqW83P3y_c4m5WifEv4Se6qEjt8Sg/exec';
+                        const formData = new FormData(form);
+
+                        // Add country code and last name to formData manually since they are hidden inputs added dynamically
+                        // Actually new FormData(form) captures current state of form, but we just added inputs above.
+                        // Let's verify hidden inputs are in DOM before creating FormData.
+                        // However, we just appended them to form.
+                        // Let's re-create valid FormData after all manipulations.
+
+                        const finalFormData = new FormData(form);
+
+                        // Ensure Google Sheets gets the FULL phone number (including country code)
+                        if (iti) {
+                            const fullPhone = iti.getNumber();
+                            finalFormData.set('PhoneNumber_countrycode', fullPhone);
+                        }
+
+                        // console.log(finalFormData);
+                        // console.log(Object.fromEntries(finalFormData));
+
+                        // Submit to Google Sheets (Async)
+                        // fetch(googleScriptURL, { method: 'POST', body: finalFormData })
+                        //     .then(response => console.log('Success!', response))
+                        //     .catch(error => console.error('Error!', error.message))
+                        //     .finally(() => {
+                        //         // Submit to Zoho (original action)
+                        //         // form.submit();
+                        //     });
+
+                        fetch(googleScriptURL, {
+                            method: 'POST',
+                            body: finalFormData, // keep your FormData here for now
+                            // don't set custom headers here (especially Content-Type) — let browser set it
+                        })
+                            .then(async (response) => {
+                                console.log('HTTP status:', response.status, response.type);
+                                // Try to read response body as text (safer)
+                                const text = await response.text().catch(() => null);
+                                console.log('Response text:', text);
+
+                                // If this is JSON, parse it:
+                                try {
+                                    const json = JSON.parse(text);
+                                    console.log('Response JSON:', json);
+                                } catch (e) {
+                                    // not JSON
+                                }
+
+                                // Also log finalFormData contents client-side so you know what you sent:
+                                console.log('FormData sent:');
+                                for (const [k, v] of finalFormData.entries()) {
+                                    console.log(k, ':', v);
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Network/fetch error:', error);
+                            });
+                    }
+                });
+            }
+
+            // UTM Parameter Tracking
+            function getQueryParams() {
+                const params = {};
+                const searchParams = new URLSearchParams(window.location.search);
+                for (const [key, value] of searchParams) {
+                    params[key] = value;
+                }
+                return params;
+            }
+
+            function populateHiddenFields() {
+                const params = getQueryParams();
+                const utmFields = [
+                    'utm_source', 'utm_medium', 'utm_campaign', 'utm_term',
+                    'utm_content', 'utm_id', 'utm_adgroup', 'utm_matchtype',
+                    'utm_audience', 'utm_adgroupid', 'utm_network', 'utm_placement'
+                ];
+
+                utmFields.forEach(field => {
+                    if (params[field]) {
+                        const input = document.querySelector(`input[name="${field}"]`);
+                        if (input) {
+                            input.value = params[field];
+                        }
+                    }
+                });
+            }
+
+            populateHiddenFields();
+        });
+    </script>
+</body>
+
+</html>

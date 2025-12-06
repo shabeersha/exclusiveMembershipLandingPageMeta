@@ -7,4 +7,3 @@ build/
 *.log
 npm-debug.log*
 .env
-register.html

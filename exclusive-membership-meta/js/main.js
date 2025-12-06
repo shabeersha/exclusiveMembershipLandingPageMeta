@@ -415,7 +415,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Video.js Single Playback Logic & Carousel Control
-    const playerIds = ['brototype-video', 'vid1', 'vid2', 'vid3', 'vid4'];
+    const playerIds = ['brototype-video', 'vid1', 'vid2', 'vid3', 'vid4', 'vid5'];
     playerIds.forEach(id => {
         const player = videojs(id);
         player.ready(() => {

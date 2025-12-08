@@ -171,6 +171,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+
     // Video Carousel Logic
     const carouselTrack = document.getElementById('videoCarouselTrack');
     let carouselInterval;
@@ -184,13 +185,27 @@ document.addEventListener('DOMContentLoaded', function () {
         const cardWidth = 300;
         const gap = 20;
         const totalWidth = cardWidth + gap;
-        const totalCards = cards.length;
+        const originalCardsCount = cards.length;
 
-        // Clone cards
-        cards.forEach(card => {
+        // Clone cards logic with UNIQUE IDs
+        cards.forEach((card) => {
             const clone = card.cloneNode(true);
+            const originalVideo = card.querySelector('video');
+            const cloneVideo = clone.querySelector('video');
+
+            if (originalVideo && cloneVideo) {
+                // Determine new ID for clone (e.g., vid1_clone)
+                const originalId = originalVideo.id;
+                const cloneId = originalId + '_clone';
+                cloneVideo.id = cloneId;
+
+                // Ensure the clone doesn't have initialized classes yet
+                cloneVideo.classList.remove('vjs-has-started', 'vjs-paused', 'vjs-ended', 'vjs-playing');
+            }
             carouselTrack.appendChild(clone);
         });
+
+        const totalCards = carouselTrack.querySelectorAll('.video-card').length;
 
         function moveCarousel() {
             if (isVideoPlaying) return;
@@ -199,12 +214,14 @@ document.addEventListener('DOMContentLoaded', function () {
             carouselTrack.style.transition = 'transform 0.5s ease-in-out';
             carouselTrack.style.transform = `translateX(-${carouselIndex * totalWidth}px)`;
 
-            if (carouselIndex >= totalCards) {
+            // Check if we've scrolled past the original set
+            if (carouselIndex >= originalCardsCount) {
                 setTimeout(() => {
                     carouselTrack.style.transition = 'none';
+                    // Jump back to the start (index 0)
                     carouselIndex = 0;
                     carouselTrack.style.transform = `translateX(0)`;
-                }, 500);
+                }, 500); // Wait for transition to finish
             }
         }
 
@@ -235,12 +252,12 @@ document.addEventListener('DOMContentLoaded', function () {
         let startTime = 0;
 
         // Touch events
-        carouselTrack.addEventListener('touchstart', touchStart);
+        carouselTrack.addEventListener('touchstart', touchStart());
         carouselTrack.addEventListener('touchend', touchEnd);
         carouselTrack.addEventListener('touchmove', touchMove);
 
         // Mouse events
-        carouselTrack.addEventListener('mousedown', touchStart);
+        carouselTrack.addEventListener('mousedown', touchStart());
         carouselTrack.addEventListener('mouseup', touchEnd);
         carouselTrack.addEventListener('mouseleave', () => {
             if (isDragging) touchEnd();
@@ -255,7 +272,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return false;
         };
 
-        function touchStart(index) {
+        function touchStart() {
             return function (event) {
                 stopCarousel(); // Stop auto-scroll on interaction
                 isDragging = true;
@@ -287,7 +304,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Boundary checks
             if (carouselIndex < 0) carouselIndex = 0;
-            if (carouselIndex > totalCards) carouselIndex = totalCards; // Allow going to clone end
+            if (carouselIndex >= totalCards) carouselIndex = totalCards - 1;
 
             setPositionByIndex();
 
@@ -325,8 +342,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             carouselTrack.style.transform = `translateX(${targetTranslate}px)`;
 
-            // Handle infinite loop reset if needed (similar to moveCarousel)
-            if (carouselIndex >= totalCards) {
+            // Handle infinite loop reset
+            if (carouselIndex >= originalCardsCount) {
                 setTimeout(() => {
                     carouselTrack.style.transition = 'none';
                     carouselIndex = 0;
@@ -338,101 +355,129 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        // Update the moveCarousel function to sync with manual drag state
-        // We need to override the original moveCarousel to use the shared variables if possible,
-        // or just update the shared variables inside it.
-        // Since moveCarousel is defined above in the same scope, we can modify it or just ensure
-        // it updates `prevTranslate` and `currentTranslate`.
-
-        // Let's redefine moveCarousel to be safe and use the shared state
-        // We need to re-assign the outer moveCarousel function
-        // But `moveCarousel` was defined as a function declaration, so it's hoisted but we can overwrite it if we change it to a var/let or just hook into it.
-        // Actually, the simplest way is to update `prevTranslate` inside the original `moveCarousel` loop?
-        // No, better to replace the logic here since we are inside the `if (carouselTrack)` block.
-
-        // Overwriting the previous moveCarousel logic with one that respects the drag state
-        carouselInterval = setInterval(() => {
-            if (isVideoPlaying) return;
-
-            carouselIndex++;
-            carouselTrack.style.transition = 'transform 0.5s ease-in-out';
-            const targetTranslate = carouselIndex * -totalWidth;
-            carouselTrack.style.transform = `translateX(${targetTranslate}px)`;
-
-            // Sync drag state
-            prevTranslate = targetTranslate;
-            currentTranslate = targetTranslate;
-
-            if (carouselIndex >= totalCards) {
-                setTimeout(() => {
-                    carouselTrack.style.transition = 'none';
-                    carouselIndex = 0;
-                    const resetTranslate = 0;
-                    prevTranslate = resetTranslate;
-                    currentTranslate = resetTranslate;
-                    carouselTrack.style.transform = `translateX(${resetTranslate}px)`;
-                }, 500);
-            }
-        }, 3000);
-
-        // Clear the old interval started at the top
-        clearInterval(carouselInterval);
-        // Re-assign the startCarousel to use this new interval logic
-        startCarousel = function () {
-            if (carouselInterval) clearInterval(carouselInterval);
-            carouselInterval = setInterval(() => {
-                if (isVideoPlaying) return;
-
-                carouselIndex++;
-                carouselTrack.style.transition = 'transform 0.5s ease-in-out';
-                const targetTranslate = carouselIndex * -totalWidth;
-                carouselTrack.style.transform = `translateX(${targetTranslate}px)`;
-
-                prevTranslate = targetTranslate;
-                currentTranslate = targetTranslate;
-
-                if (carouselIndex >= totalCards) {
-                    setTimeout(() => {
-                        carouselTrack.style.transition = 'none';
-                        carouselIndex = 0;
-                        const resetTranslate = 0;
-                        prevTranslate = resetTranslate;
-                        currentTranslate = resetTranslate;
-                        carouselTrack.style.transform = `translateX(${resetTranslate}px)`;
-                    }, 500);
-                }
-            }, 3000);
-        };
-
-        // Restart with new logic
-        startCarousel();
-
         // Fix touchStart call
         carouselTrack.removeEventListener('touchstart', touchStart);
         carouselTrack.removeEventListener('mousedown', touchStart);
-        carouselTrack.addEventListener('touchstart', touchStart(carouselIndex));
-        carouselTrack.addEventListener('mousedown', touchStart(carouselIndex));
+        // We don't really need to pass 'index' there, the closure captures it via carouselIndex
+        // But the previous code was trying to pass it. simpler to just pass handler.
+        carouselTrack.addEventListener('touchstart', touchStart()); // Call it to return the handler function
+        carouselTrack.addEventListener('mousedown', touchStart());
     }
 
     // Video.js Single Playback Logic & Carousel Control
-    const playerIds = ['brototype-video', 'vid1', 'vid2', 'vid3', 'vid4', 'vid5'];
-    playerIds.forEach(id => {
-        const player = videojs(id);
-        player.ready(() => {
+    // We will dynamically find all video components now, since we have clones
+    const playerIds = ['brototype-video']; // Keep hero video
+
+    // Configuration for carousel videos
+    const carouselVideoConfig = {
+        'vid1': 'https://www.youtube.com/watch?v=wdYBzL56Be4',
+        'vid2': 'https://www.youtube.com/watch?v=ioBS_bubZjI',
+        'vid3': 'https://www.youtube.com/watch?v=HnKe-bTVRY0',
+        'vid4': 'https://www.youtube.com/watch?v=eymIdH_43xo',
+        'vid5': 'https://www.youtube.com/watch?v=Rrd_ZwTqOy0'
+    };
+
+    // Staggered Initialization Logic
+    const initPlayer = (id) => {
+        return new Promise((resolve) => {
+            if (id === 'brototype-video') {
+                resolve(videojs(id));
+                return;
+            }
+
+            // Determine Source URL (Handle Clones)
+            // If id is 'vid1_clone', we want 'vid1' config
+            let configId = id.replace('_clone', '');
+
+            const videoUrl = carouselVideoConfig[configId];
+            if (!videoUrl) {
+                // If we can't find config, maybe it's not one of ours
+                resolve(null);
+                return;
+            }
+
+            const options = {
+                techOrder: ['youtube'],
+                sources: [{
+                    type: 'video/youtube',
+                    src: videoUrl
+                }],
+                controls: false, // Hide controls as requested
+                youtube: {
+                    ytControls: 0, // Hide YouTube controls
+                    customVars: {
+                        wmode: 'transparent',
+                        rel: 0,
+                        modestbranding: 1,
+                        showinfo: 0,
+                    }
+                }
+            };
+
+            // Safety check if element exists
+            if (!document.getElementById(id)) {
+                resolve(null);
+                return;
+            }
+
+            const player = videojs(id, options);
+            player.ready(() => {
+                resolve(player);
+            });
+        });
+    };
+
+    // Initialize players sequentially with delay
+    const initAllPlayers = async () => {
+        // Collect all IDs from the track (originals + clones)
+        const track = document.getElementById('videoCarouselTrack');
+        const carouselVideoIds = [];
+        if (track) {
+            const videoEls = track.querySelectorAll('video');
+            videoEls.forEach(el => {
+                if (el.id) carouselVideoIds.push(el.id);
+            });
+        }
+
+        // Add them to our global tracking list
+        playerIds.push(...carouselVideoIds);
+
+        // Stagger Initialization
+        for (const id of carouselVideoIds) {
+            await new Promise(r => setTimeout(r, 800)); // 800ms delay
+            await initPlayer(id);
+        }
+
+        // Attach event listeners to ALL players
+        setTimeout(setupPlaybackControl, 1000);
+    };
+
+    const setupPlaybackControl = () => {
+        playerIds.forEach(id => {
+            const player = videojs(id);
+            if (!player) return;
+
+            player.off('play'); // Remove existing listeners to avoid duplicates if re-run
+            player.off('pause');
+            player.off('ended');
+
             player.on('play', () => {
                 // Stop carousel ONLY if a carousel video is playing
-                // All carousel videos have ids starting with 'vid'
                 if (id.startsWith('vid') && stopCarousel) {
                     isVideoPlaying = true;
                     stopCarousel();
                 }
 
-                // Pause other videos (keep this to ensure only one audio source is active)
+                // Pause other videos
                 playerIds.forEach(otherId => {
                     if (otherId !== id) {
-                        const otherPlayer = videojs(otherId);
-                        if (!otherPlayer.paused()) {
-                            otherPlayer.pause();
+                        try {
+                            const otherPlayer = videojs(otherId);
+                            if (otherPlayer && !otherPlayer.paused()) {
+                                otherPlayer.pause();
+                            }
+                        } catch (e) {
+                            // Player might not be ready
                         }
                     }
                 });
@@ -442,15 +487,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 setTimeout(() => {
                     let anyCarouselVideoPlaying = false;
                     playerIds.forEach(pid => {
-                        // Only care about carousel videos for resuming logic
                         if (pid.startsWith('vid')) {
                             const p = videojs(pid);
                             if (p && !p.paused() && !p.ended()) anyCarouselVideoPlaying = true;
                         }
                     });
 
-                    // If NO carousel video is playing, we can resume.
-                    // (Even if hero video is playing, we resume carousel)
                     if (!anyCarouselVideoPlaying && startCarousel) {
                         isVideoPlaying = false;
                         startCarousel();
@@ -461,7 +503,10 @@ document.addEventListener('DOMContentLoaded', function () {
             player.on('pause', resumeCarousel);
             player.on('ended', resumeCarousel);
         });
-    });
+    };
+
+    // Start initialization
+    initAllPlayers();
     // UTM Parameter Tracking
     function getQueryParams() {
         const params = {};

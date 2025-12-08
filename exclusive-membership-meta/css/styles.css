@@ -224,14 +224,14 @@ p {
 .hero-member-count {
     display: inline-flex;
     align-items: center;
-    background: rgba(255, 255, 255, 0.05);
+    background: #3d2c0a;
     padding: 6px 12px;
     border-radius: 50px;
     font-size: 14px;
     color: var(--text-primary);
     margin-bottom: 24px;
     margin-left: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid #ffa50080;
 }
 
 .hero-member-count .count-icon {
@@ -240,8 +240,13 @@ p {
 
 .hero-member-count .counter-value {
     font-weight: 700;
-    color: var(--secondary-teal);
+    color: #ffa500;
     margin-right: 4px;
+    font-size: 17px;
+}
+
+.hero-member-count .counter-label {
+    color: #ffa500;
 }
 
 .program-title {
@@ -1236,7 +1241,6 @@ footer {
 .whatsapp-float:active {
     transform: scale(0.9);
 }
-
 
 .phone-rotate {
     animation: rotatePause 4s linear infinite;

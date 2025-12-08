@@ -420,13 +420,14 @@ document.addEventListener('DOMContentLoaded', function () {
         const player = videojs(id);
         player.ready(() => {
             player.on('play', () => {
-                // Stop carousel
-                if (stopCarousel) {
+                // Stop carousel ONLY if a carousel video is playing
+                // All carousel videos have ids starting with 'vid'
+                if (id.startsWith('vid') && stopCarousel) {
                     isVideoPlaying = true;
                     stopCarousel();
                 }
 
-                // Pause other videos
+                // Pause other videos (keep this to ensure only one audio source is active)
                 playerIds.forEach(otherId => {
                     if (otherId !== id) {
                         const otherPlayer = videojs(otherId);
@@ -439,13 +440,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const resumeCarousel = () => {
                 setTimeout(() => {
-                    let anyPlaying = false;
+                    let anyCarouselVideoPlaying = false;
                     playerIds.forEach(pid => {
-                        const p = videojs(pid);
-                        if (p && !p.paused() && !p.ended()) anyPlaying = true;
+                        // Only care about carousel videos for resuming logic
+                        if (pid.startsWith('vid')) {
+                            const p = videojs(pid);
+                            if (p && !p.paused() && !p.ended()) anyCarouselVideoPlaying = true;
+                        }
                     });
 
-                    if (!anyPlaying && startCarousel) {
+                    // If NO carousel video is playing, we can resume.
+                    // (Even if hero video is playing, we resume carousel)
+                    if (!anyCarouselVideoPlaying && startCarousel) {
                         isVideoPlaying = false;
                         startCarousel();
                     }

@@ -402,9 +402,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     type: 'video/youtube',
                     src: videoUrl
                 }],
-                controls: false, // Hide controls as requested
+                controls: true,
                 youtube: {
-                    ytControls: 0, // Hide YouTube controls
+                    ytControls: 0, // Hide YouTube controls, use Video.js controls
                     customVars: {
                         wmode: 'transparent',
                         rel: 0,

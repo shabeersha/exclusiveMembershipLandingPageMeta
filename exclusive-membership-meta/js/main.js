@@ -116,17 +116,17 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Note: 'PhoneNumber_countrycode' is the name of the input field in the form.
                 }
 
-                // Submit to Google Sheets (Async)
+                // Submit to Google Sheets (Fire-and-Forget)
+                // We use keepalive: true so the request completes even if the page unloads (which form.submit() will do immediately)
                 fetch(googleScriptURL, {
                     method: 'POST',
-                    body: finalFormData
-                })
-                    .then(response => console.log('Google Sheet Success!', response))
-                    .catch(error => console.error('Google Sheet Error!', error.message))
-                    .finally(() => {
-                        // Submit to Zoho (original action)
-                        form.submit();
-                    });
+                    body: finalFormData,
+                    keepalive: true
+                }).catch(error => console.error('Google Sheet Error (Ignored):', error.message));
+
+                // Track Lead and Submit to Zoho IMMEDIATELY
+                fbq('track', 'Lead Submit');
+                form.submit();
             }
         });
     }

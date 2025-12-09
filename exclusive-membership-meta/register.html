@@ -772,46 +772,16 @@
                         // console.log(finalFormData);
                         // console.log(Object.fromEntries(finalFormData));
 
-                        // Submit to Google Sheets (Async)
-                        // fetch(googleScriptURL, { method: 'POST', body: finalFormData })
-                        //     .then(response => console.log('Success!', response))
-                        //     .catch(error => console.error('Error!', error.message))
-                        //     .finally(() => {
-                        //         // Submit to Zoho (original action)
-                        //         // form.submit();
-                        //     });
-
+                        // Submit to Google Sheets (Fire-and-Forget)
                         fetch(googleScriptURL, {
                             method: 'POST',
-                            body: finalFormData, // keep your FormData here for now
-                            // don't set custom headers here (especially Content-Type) — let browser set it
-                        })
-                            .then(async (response) => {
-                                console.log('HTTP status:', response.status, response.type);
-                                // Try to read response body as text (safer)
-                                const text = await response.text().catch(() => null);
-                                console.log('Response text:', text);
+                            body: finalFormData,
+                            keepalive: true
+                        }).catch(error => console.error('Google Sheet Error (Ignored):', error.message));
 
-                                // If this is JSON, parse it:
-                                try {
-                                    const json = JSON.parse(text);
-                                    console.log('Response JSON:', json);
-                                } catch (e) {
-                                    // not JSON
-                                }
-
-                                // Also log finalFormData contents client-side so you know what you sent:
-                                console.log('FormData sent:');
-                                for (const [k, v] of finalFormData.entries()) {
-                                    console.log(k, ':', v);
-                                }
-                            })
-                            .catch(error => {
-                                console.error('Network/fetch error:', error);
-                            })
-                            .finally(() => {
-                                form.submit();
-                            });
+                        // Track Lead and Submit
+                        fbq('track', 'Lead Submit');
+                        form.submit();
                     }
                 });
             }

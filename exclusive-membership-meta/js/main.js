@@ -116,13 +116,18 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Note: 'PhoneNumber_countrycode' is the name of the input field in the form.
                 }
 
-                // Submit to Google Sheets (Fire-and-Forget)
-                // We use keepalive: true so the request completes even if the page unloads (which form.submit() will do immediately)
-                fetch(googleScriptURL, {
-                    method: 'POST',
-                    body: finalFormData,
-                    keepalive: true
-                }).catch(error => console.error('Google Sheet Error (Ignored):', error.message));
+                // Submit to Google Sheets (Fire-and-Forget using sendBeacon for better mobile reliability)
+                // navigator.sendBeacon is specifically designed to send data when unloading a page
+                if (navigator.sendBeacon) {
+                    navigator.sendBeacon(googleScriptURL, finalFormData);
+                } else {
+                    // Fallback for very old browsers (unlikely to be hit but good practice)
+                    fetch(googleScriptURL, {
+                        method: 'POST',
+                        body: finalFormData,
+                        keepalive: true
+                    }).catch(error => console.error('Google Sheet Error (Ignored):', error.message));
+                }
 
                 // Track Lead and Submit to Zoho IMMEDIATELY
                 fbq('track', 'Lead Submit');

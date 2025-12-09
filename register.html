@@ -772,12 +772,16 @@
                         // console.log(finalFormData);
                         // console.log(Object.fromEntries(finalFormData));
 
-                        // Submit to Google Sheets (Fire-and-Forget)
-                        fetch(googleScriptURL, {
-                            method: 'POST',
-                            body: finalFormData,
-                            keepalive: true
-                        }).catch(error => console.error('Google Sheet Error (Ignored):', error.message));
+                        // Submit to Google Sheets (Fire-and-Forget using sendBeacon for better mobile reliability)
+                        if (navigator.sendBeacon) {
+                            navigator.sendBeacon(googleScriptURL, finalFormData);
+                        } else {
+                            fetch(googleScriptURL, {
+                                method: 'POST',
+                                body: finalFormData,
+                                keepalive: true
+                            }).catch(error => console.error('Google Sheet Error (Ignored):', error.message));
+                        }
 
                         // Track Lead and Submit
                         fbq('track', 'Lead Submit');

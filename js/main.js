@@ -36,7 +36,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('leadForm');
     if (form) {
         form.addEventListener('submit', function (e) {
-            console.log("Form submitted", e);
             e.preventDefault();
 
             // Basic validation
@@ -124,6 +123,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     .then(response => console.log('Google Sheet Success!', response))
                     .catch(error => console.error('Google Sheet Error!', error.message))
                     .finally(() => {
+                        fbq('track', 'Lead Submit');
                         // Submit to Zoho (original action)
                         form.submit();
                     });
